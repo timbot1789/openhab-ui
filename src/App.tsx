@@ -1,5 +1,4 @@
 import HomePage from "./homepage.tsx"
-import './App.css'
 
 function App() {
 

@@ -1,45 +1,39 @@
-import { useState, useEffect, type ReactElement } from "react";
+import { useState, type FC } from "react";
 import ItemsIndex from "./items-index";
 import ThingsIndex from "./things-index";
+import PokemonIndex from "./pokemon-index";
+
+interface PagesList {
+  [index: string]: React.ReactNode 
+}
 
 function HomePage() {
 
-  const [items, setItems] = useState<object[]>([1,2,3,4]);
-  const [page, setPage] = useState<ReactElement>(() => <div></div>)
+  const [pageKey, setPageKey] = useState<string>(() => "Items")
 
-  async function fetchItems() {
-    const res = await fetch('/band/items')
-
-    setItems(await res.json());
-  }
-
-  useEffect(() => {
-    fetchItems();
-  }, [])
-
-  type pageEntry = { name: string; component: () => ReactElement }
-  const pages: pageEntry[] = [
-    {name: "Items", component: () => ItemsIndex({items: items})},
-    {name: "Things", component: () => ThingsIndex() }
-  ];
-  const makeChoosePage = (page: () => ReactElement) => {
+  const pages: PagesList = {
+    Items: ItemsIndex(),
+    Things: ThingsIndex(),
+    Pokemon: PokemonIndex() 
+  };
+  const makeChoosePage = (key: string) => {
     return () => {
-      setPage(page)
+      setPageKey(key)
     }
   }
   return (
     <div>
       <ul>
         {
-          pages.map((pageObj) => (
-            <li onClick={makeChoosePage(pageObj.component)}>
-              {pageObj.name}
+          Object.keys(pages).map((key) => (
+            <li onClick={makeChoosePage(key)}>
+              {key}
             </li>
             ))
         }
       </ul>
       <div>
-        {page}
+        {pages[pageKey]}
       </div>
     </div>
   );

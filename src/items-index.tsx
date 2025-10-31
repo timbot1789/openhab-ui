@@ -1,6 +1,9 @@
-function ItemsIndex({items}) {
+import { useState } from "react";
 
-  return <div>{items.length}</div>
+function ItemsIndex() {
+  const [items] = useState([]);
+
+  return <div>Items</div>
 }
 
 export default ItemsIndex;
