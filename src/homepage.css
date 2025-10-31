@@ -1,0 +1,63 @@
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.main-page {
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.sidebar {
+  width: 15%;
+  min-height: 100%;
+  border-right: 1px solid gray;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar button {
+  background-color: white;
+  width: 100%;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid gray;
+}
+
+.page {
+  width: 85%;
+  padding: 8px;
+}
+
+#pokemon-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#pokemon-list {
+  height: 90%;
+}
+
+#pokemon-nav{
+  height: 5%;
+  border-top: 1px solid gray;
+  padding: 8px;
+}
+
+.page-selector {
+  display: flex;
+  justify-content: space-between;
+}
+

@@ -1,7 +1,8 @@
-import { useState, type FC } from "react";
+import { useState } from "react";
 import ItemsIndex from "./items-index";
 import ThingsIndex from "./things-index";
 import PokemonIndex from "./pokemon-index";
+import "./homepage.css"
 
 interface PagesList {
   [index: string]: React.ReactNode 
@@ -22,19 +23,21 @@ function HomePage() {
     }
   }
   return (
-    <div>
-      <ul>
-        {
-          Object.keys(pages).map((key) => (
-            <li onClick={makeChoosePage(key)}>
-              {key}
-            </li>
-            ))
-        }
-      </ul>
-      <div>
+    <div className="main-page">
+      <nav className="sidebar">
+        <ul>
+          {
+            Object.keys(pages).map((key) => (
+              <li >
+                <button onClick={makeChoosePage(key)}>{key}</button>
+              </li>
+              ))
+          }
+        </ul>
+      </nav>
+      <section className="page">
         {pages[pageKey]}
-      </div>
+      </section>
     </div>
   );
 }
