@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
+import Pokemon from "./pokemon";
+
+interface PokeHeader {
+  name: string;
+  url: string;
+}
 
 function PokemonIndex() {
   const defaultUrl = "/pokeapi/pokemon"
-  const [pokemon, setPokemon] = useState([])
+  const [pokedex, setPokedex] = useState<PokeHeader[]>([])
   const [prevUrl, setPrevUrl] = useState<string | null>(null)
   const [nextUrl, setNextUrl] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -26,7 +32,7 @@ function PokemonIndex() {
     const response = await fetch(url);
     const json = await response.json();
     determinePages(new URL(json.next || json.previous), json.count, json.next)
-    setPokemon(json.results)
+    setPokedex(json.results)
     setPrevUrl(parseUrl(json.previous));
     setNextUrl(parseUrl(json.next));
   }
@@ -45,9 +51,12 @@ function PokemonIndex() {
 
   return <div id="pokemon-page">
     <ul id="pokemon-list">
-      {pokemon.map((poke) => <li>
-        <a href={poke.url}>{poke.name}</a>
-      </li>)}
+      {pokedex.map((pokemon) => {
+        return (<li key={pokemon.url}>
+          <Pokemon name={pokemon.name} url={pokemon.url} startOpened={false}/>
+        </li>)
+      }
+      )}
     </ul>
     <nav className="page-selector" id="pokemon-nav">
       {prevUrl ? <button onClick={getPreviousPage}>previous</button> : <div></div> }
