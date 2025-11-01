@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface Props { name: string, url: string, startOpened: boolean }
 interface Sprite {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Pokemon from "./pokemon";
+import Pokemon from "../components/pokemon";
 
 interface PokeHeader {
   name: string;

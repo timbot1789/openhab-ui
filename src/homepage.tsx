@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ItemsIndex from "./items-index";
-import ThingsIndex from "./things-index";
-import PokemonIndex from "./pokemon-index";
+import ItemsIndex from "./pages/items-index";
+import ThingsIndex from "./pages/things-index";
+import PokemonIndex from "./pages/pokemon-index";
 import "./homepage.css"
 
 interface PagesList {
