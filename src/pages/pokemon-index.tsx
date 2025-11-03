@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Pokemon from "../components/pokemon";
 
 interface PokeHeader {
@@ -16,26 +16,26 @@ function PokemonIndex() {
 
   const parseUrl = (url: string | null) => {
     if (!url) return null;
-    return url.replace("https://pokeapi.co/api/v2/","/pokeapi/")
+    return url.replace("https://pokeapi.co/api/v2/", "/pokeapi/")
   }
 
   const determinePages = (urlObj: URL, count: number, next = false) => {
     const params = urlObj.searchParams;
     const offset = parseInt(params.get("offset") || "1");
     const limit = parseInt(params.get("limit") || "1");
-    const totalPages = Math.ceil(count / limit) 
+    const totalPages = Math.ceil(count / limit)
     setTotalPages(totalPages);
-    setCurrentPage(next ? (offset / limit): totalPages);
+    setCurrentPage(next ? (offset / limit) : totalPages);
   }
 
-  const fetchPokemon = async (url: string) => {
+  const fetchPokemon = useCallback(async (url: string) => {
     const response = await fetch(url);
     const json = await response.json();
     determinePages(new URL(json.next || json.previous), json.count, json.next)
     setPokedex(json.results)
     setPrevUrl(parseUrl(json.previous));
     setNextUrl(parseUrl(json.next));
-  }
+  }, [])
 
   const getPreviousPage = () => {
     if (prevUrl) fetchPokemon(prevUrl);
@@ -46,22 +46,22 @@ function PokemonIndex() {
   }
 
   useEffect(() => {
-    fetchPokemon(defaultUrl) 
-  },[])
+    fetchPokemon(defaultUrl)
+  }, [fetchPokemon])
 
   return <div id="pokemon-page">
     <ul id="pokemon-list">
       {pokedex.map((pokemon) => {
         return (<li key={pokemon.url}>
-          <Pokemon name={pokemon.name} url={pokemon.url} startOpened={false}/>
+          <Pokemon name={pokemon.name} url={pokemon.url} startOpened={false} />
         </li>)
       }
       )}
     </ul>
     <nav className="page-selector" id="pokemon-nav">
-      {prevUrl ? <button onClick={getPreviousPage}>previous</button> : <div></div> }
+      {prevUrl ? <button onClick={getPreviousPage}>previous</button> : <div></div>}
       <p>Page {currentPage} of {totalPages} </p>
-      {nextUrl ? <button onClick={getNextPage}>next</button> : <div></div> }
+      {nextUrl ? <button onClick={getNextPage}>next</button> : <div></div>}
     </nav>
   </div>
 }

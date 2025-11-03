@@ -5,17 +5,15 @@ import PokemonIndex from "./pages/pokemon-index";
 import "./homepage.css"
 
 interface PagesList {
-  [index: string]: React.ReactNode 
+  [index: string]: React.ReactNode
 }
 
 function HomePage() {
-
   const [pageKey, setPageKey] = useState<string>(() => "Items")
-
   const pages: PagesList = {
     Items: ItemsIndex(),
     Things: ThingsIndex(),
-    Pokemon: PokemonIndex() 
+    Pokemon: PokemonIndex()
   };
   const makeChoosePage = (key: string) => {
     return () => {
@@ -31,7 +29,7 @@ function HomePage() {
               <li >
                 <button onClick={makeChoosePage(key)}>{key}</button>
               </li>
-              ))
+            ))
           }
         </ul>
       </nav>
