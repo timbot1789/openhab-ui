@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Item from "../components/Item";
 
 function ItemsIndex() {
   const defaultUrl = "/rest/items"
@@ -16,7 +17,7 @@ function ItemsIndex() {
 
   return <div>
     <ul>
-      {items.map((item) => (<li key={item.name}>{item.name}</li>))}
+      {items.map((item) => (<li key={item.name}><Item name={item.name} /></li>))}
     </ul>
   </div>
 }
