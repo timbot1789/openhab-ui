@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 interface ItemProps {
-  name: string
+  label: string
+  id: string
 }
 
-function Item({ name }: ItemProps) {
-  const defaultUrl = `/rest/items/${name}`
+function Item({ label, id }: ItemProps) {
+  const defaultUrl = `/rest/items/${id}`
   const [item, setItem] = useState(null);
   const [showItem, setShowItem] = useState(false)
 
@@ -16,7 +17,7 @@ function Item({ name }: ItemProps) {
   }
 
   return <div onClick={() => setShowItem(!showItem)} onMouseEnter={() => fetchItem(defaultUrl)}>
-    <p>{name}</p>
+    <p>{label}</p>
     {item && showItem && <article>
       <a href={item.link}>{item.name}</a>
       {JSON.stringify(item)}

@@ -1,8 +1,10 @@
 import { useState } from "react";
-import ItemsIndex from "./pages/items-index";
-import ThingsIndex from "./pages/things-index";
+import Item from "./components/item";
 import PokemonIndex from "./pages/pokemon-index";
 import "./homepage.css"
+import Index from "./pages/index-page";
+import Thing from "./components/thing";
+import type IItem from "./interfaces/iitem";
 
 interface PagesList {
   [index: string]: React.ReactNode
@@ -11,8 +13,14 @@ interface PagesList {
 function HomePage() {
   const [pageKey, setPageKey] = useState<string>(() => "Items")
   const pages: PagesList = {
-    Items: ItemsIndex(),
-    Things: ThingsIndex(),
+    Items: Index(
+      {
+        url: '/rest/items', component: Item, parseItem: (json: { [key: string]: string }) => {
+          return { id: json["name"], ...json } as IItem;
+        }
+      }
+    ),
+    Things: Index({ url: '/rest/things', component: Thing }),
     Pokemon: PokemonIndex()
   };
   const makeChoosePage = (key: string) => {

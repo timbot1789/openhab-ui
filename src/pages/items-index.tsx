@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Item from "../components/Item";
+import Item from "../components/item";
 
 function ItemsIndex() {
   const defaultUrl = "/rest/items"
